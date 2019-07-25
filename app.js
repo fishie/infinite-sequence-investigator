@@ -1,24 +1,29 @@
-import { IntegerInputParser } from './IntegerInputParser';
-
-WebAssembly.instantiateStreaming(fetch('app.wasm'))
-  .then((wasm) => {
-    console.log(wasm.instance.exports._foobar());
-  });
-
-document.addEventListener('DOMContentLoaded', () => {
-  new InfiniteSequenceInvestigator();
-});
+import { IntegerInputParser } from './IntegerInputParser.js';
 
 class InfiniteSequenceInvestigator {
 
   constructor() {
-    document.querySelector('#IntegerPlusButton').addEventListener('click', () => this.handleIntegerPlusClick(this));
-    document.querySelector('#IntegerMinusButton').addEventListener('click', this.handleIntegerMinusClick);
-    this.integerInput = document.querySelector('#IntegerInput');
+    this.initializeWebAssembly();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      this.addEventListeners(this);
+      this.integerInput = document.querySelector('#IntegerInput');
+    });
+  }
+
+  initializeWebAssembly() {
+    WebAssembly.instantiateStreaming(fetch('app.wasm'))
+      .then((wasm) => {
+        console.log(wasm.instance.exports._foobar());
+      });
+  }
+
+  addEventListeners(self) {
+    document.querySelector('#IntegerPlusButton').addEventListener('click', () => self.handleIntegerPlusClick(self));
+    document.querySelector('#IntegerMinusButton').addEventListener('click', self.handleIntegerMinusClick);
   }
 
   handleIntegerPlusClick(self) {
-    console.log(self.integerInput.value);
     console.log(IntegerInputParser.parse(self.integerInput.value));
   }
 
@@ -26,3 +31,5 @@ class InfiniteSequenceInvestigator {
     console.log('-');
   }
 }
+
+new InfiniteSequenceInvestigator();

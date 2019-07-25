@@ -6,7 +6,8 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "test": "node --experimental-modules app.tests.js"
+    "test": "node --experimental-modules app.tests.js",
+    "start": "python3 -m http.server"
   },
   "repository": {
     "type": "git",
