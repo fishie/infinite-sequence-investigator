@@ -25,6 +25,9 @@ emcc app.c -o app.wasm -Os
 python3 -m http.server
 ```
 
+# Test
+Running npm test requires nodejs version 12 or higher because of --experimental-modules which is experimental support for ES6 style modules in nodejs.
+
 # Troubleshooting
 ```
 Uncaught (in promise) TypeError: Failed to execute 'compile' on 'WebAssembly': Incorrect response MIME type. Expected 'application/wasm'.

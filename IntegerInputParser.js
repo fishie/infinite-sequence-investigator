@@ -4,7 +4,10 @@ export class IntegerInputParser {
   static parse(value) {
     assertType(value, 'string');
 
-    const onlyDigitsAndSpace = value.replace(/\D+/g, ' ');
-    return onlyDigitsAndSpace.trim();
+    const onlyDigitsAndSpace = value.normalize('NFKC').replace(/\D+/g, ' ').trim();
+    if (onlyDigitsAndSpace !== '') {
+      return onlyDigitsAndSpace.split(' ').map((x) => parseInt(x));
+    }
+    return [];
   }
 }
