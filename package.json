@@ -1,0 +1,22 @@
+{
+  "name": "infinite-sequence-investigator",
+  "version": "1.0.0",
+  "description": "none",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "node --experimental-modules app.tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fishie/infinite-sequence-investigator.git"
+  },
+  "author": "Rishie Sharma",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/fishie/infinite-sequence-investigator/issues"
+  },
+  "homepage": "https://github.com/fishie/infinite-sequence-investigator#readme",
+  "type": "module"
+}
