@@ -23,26 +23,17 @@ class InfiniteSequenceInvestigator {
   }
 
   addEventListeners(self) {
-    document.querySelector('#NumberPlusButton').addEventListener('click', () => self.handleNumberPlusClick(self));
-    document.querySelector('#NumberMinusButton').addEventListener('click', () => self.handleNumberMinusClick(self));
+    document.querySelector('#NumberPlusButton').addEventListener('click', () => self.handleChosenNumberClick(self, 'positive'));
+    document.querySelector('#NumberMinusButton').addEventListener('click', () => self.handleChosenNumberClick(self, 'negative'));
   }
 
-  handleNumberPlusClick(self) {
+  handleChosenNumberClick(self, className) {
     const newNumbers = NumberInputParser.parse(self.numberInput.value);
     newNumbers.forEach((number) => {
       const numberId = self.getNewNumberId(self);
       self.numbers[numberId] = number;
-      self.chosenNumbers.appendChild(self.createPositiveNumber(self, number, numberId));
-    });
-    self.numberInput.value = '';
-  }
-
-  handleNumberMinusClick(self) {
-    const newNumbers = NumberInputParser.parse(self.numberInput.value);
-    newNumbers.forEach((number) => {
-      const numberId = self.getNewNumberId(self);
-      self.numbers[numberId] = number;
-      self.chosenNumbers.appendChild(self.createNegativeNumber(self, number, numberId));
+      const domElement = self.createNumberElement(number, numberId, className, () => delete self.numbers[numberId]);
+      self.chosenNumbers.appendChild(domElement);
     });
     self.numberInput.value = '';
   }
@@ -51,30 +42,15 @@ class InfiniteSequenceInvestigator {
     return self.numberIdCounter++;
   }
 
-  createPositiveNumber(self, number, numberId) {
+  createNumberElement(number, numberId, className, deleteCallback) {
     const span = document.createElement('span');
-    span.classList.add('chosen-number', 'positive');
+    span.classList.add('chosen-number', className);
     span.innerText = `${number}`;
     span.id = `ChosenNumber${numberId}`;
     const button = document.createElement('button');
     button.innerText = '✕';
     button.addEventListener('click', () => {
-      delete self.numbers[numberId];
-      span.remove();
-    });
-    span.appendChild(button);
-    return span;
-  }
-
-  createNegativeNumber(self, number, numberId) {
-    const span = document.createElement('span');
-    span.classList.add('chosen-number', 'negative');
-    span.innerText = `${number}`;
-    span.id = `ChosenNumber${numberId}`;
-    const button = document.createElement('button');
-    button.innerText = '✕';
-    button.addEventListener('click', () => {
-      delete self.numbers[numberId];
+      deleteCallback();
       span.remove();
     });
     span.appendChild(button);
