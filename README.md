@@ -17,12 +17,12 @@ alias emcc "python3 $emcc_path" --save
 
 # Build
 ```
-emcc app.c -o app.wasm -Os
+npm run build
 ```
 
 # Run
 ```
-python3 -m http.server
+npm start
 ```
 
 # Test
