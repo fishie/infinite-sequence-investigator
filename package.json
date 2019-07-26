@@ -7,8 +7,9 @@
   "devDependencies": {},
   "scripts": {
     "test": "node --experimental-modules app.tests.js",
-    "start": "python3 start.py",
-    "build": "emcc app.c -o app.wasm -Os"
+    "start": "npm run eslint && npm test && python3 start.py",
+    "build": "emcc app.c -o app.wasm -Os",
+    "eslint": "eslint --ext .js ."
   },
   "repository": {
     "type": "git",

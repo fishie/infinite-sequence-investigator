@@ -25,6 +25,7 @@
             "error",
             "always"
         ],
-        "no-console": "off"
+        "no-console": "off",
+        "no-restricted-globals": ["error", "self"]
     }
 }

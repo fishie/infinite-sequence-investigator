@@ -2,8 +2,7 @@
 
 ## Setup
 
-You need nodejs >= 12 to run the tests. Apart from that, node is not strictly
-necessary, check package.json for commands to run in absence of npm.
+You need nodejs >= 12 to run the tests. Install eslint for linting.
 
 ```
 sudo apt install python3 python3-distutils
@@ -40,7 +39,8 @@ npm start
 npm test
 ```
 
-Running npm test requires nodejs version 12 or higher because of --experimental-modules which is experimental support for ES6 style modules in nodejs.
+Running npm test requires nodejs version 12 or higher because of
+--experimental-modules which is experimental support for ES6 style modules in nodejs.
 
 ## Troubleshooting
 

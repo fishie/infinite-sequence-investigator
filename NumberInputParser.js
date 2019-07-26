@@ -1,6 +1,6 @@
 import { assertType } from './Utils.js';
 
-export class IntegerInputParser {
+export class NumberInputParser {
   static parse(value) {
     assertType(value, 'string');
 

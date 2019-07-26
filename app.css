@@ -18,7 +18,11 @@ button {
     cursor: pointer;
 }
 
-button.integer-buttons {
+span {
+    display: flex;
+}
+
+button.number-buttons {
     font-weight: bold;
     font-family: monospace;
     font-size: 20px;
@@ -26,6 +30,22 @@ button.integer-buttons {
     width: 30px;
 }
 
-span {
-    display: flex;
+span.chosen-number {
+    border: 2px solid gray;
+    border-radius: 20%;
+    margin: 8px 2px;
+    padding: 4px 8px;
+    color: white;
+    font-weight: bold;
+}
+span.chosen-number.positive {
+    background-color: #12bc12;
+}
+span.chosen-number.negative {
+    background-color: red;
+}
+span.chosen-number button {
+    background: none;
+    border: none;
+    color: white;
 }
