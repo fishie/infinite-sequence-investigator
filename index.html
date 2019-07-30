@@ -7,14 +7,17 @@
     <link rel="stylesheet" type="text/css" href="app.css">
   </head>
   <body>
-    <div>
-      <label for="NumberInput">Numbers</label>
-      <span>
-        <input id="NumberInput" type="text"></input>
-        <button id="NumberMinusButton" class="number-buttons">-</button>
-        <button id="NumberPlusButton" class="number-buttons">+</button>
-      </span>
+    <div id="InputContainer">
+      <div>
+        <label for="NumberInput">Numbers</label>
+        <span>
+          <input id="NumberInput" type="text"></input>
+          <button id="NumberMinusButton" class="number-buttons">-</button>
+          <button id="NumberPlusButton" class="number-buttons">+</button>
+        </span>
+      </div>
+      <span id="ChosenNumbers"></span>
     </div>
-    <span id="ChosenNumbers"></span>
+    <div id="OutputContainer"></div>
   </body>
 </html>

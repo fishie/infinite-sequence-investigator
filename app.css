@@ -1,3 +1,6 @@
+body {
+    display: flex;
+}
 input, button {
     vertical-align: bottom;
     box-sizing: border-box;
@@ -48,4 +51,16 @@ span.chosen-number button {
     background: none;
     border: none;
     color: white;
+}
+
+#InputContainer, #OutputContainer {
+    flex: 1;
+}
+
+#OutputContainer {
+    display: flex;
+    flex-flow: row wrap;
+}
+.output-number {
+    width: 40px;
 }

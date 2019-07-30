@@ -12,6 +12,7 @@ class InfiniteSequenceInvestigator {
       this.addEventListeners(this);
       this.numberInput = document.querySelector('#NumberInput');
       this.chosenNumbers = document.querySelector('#ChosenNumbers');
+      this.outputContainer = document.querySelector('#OutputContainer');
     });
   }
 
@@ -36,6 +37,7 @@ class InfiniteSequenceInvestigator {
       self.chosenNumbers.appendChild(domElement);
     });
     self.numberInput.value = '';
+    self.render(self);
   }
 
   getNewNumberId(self) {
@@ -55,6 +57,19 @@ class InfiniteSequenceInvestigator {
     });
     span.appendChild(button);
     return span;
+  }
+
+  render(self) {
+    document.querySelectorAll('.output-number').forEach((element) => {
+      element.remove();
+    });
+
+    for (let i = 1; i <= 100; i++) {
+      const span = document.createElement('span');
+      span.className = 'output-number';
+      span.innerText = i.toString();
+      self.outputContainer.appendChild(span);
+    }
   }
 }
 
