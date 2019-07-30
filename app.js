@@ -4,6 +4,8 @@ class InfiniteSequenceInvestigator {
 
   constructor() {
     this.numbers = {};
+    this.factorsOfNumbersToInclude = [];
+    this.factorsOfNumbersToExclude = [];
     this.numberIdCounter = 0;
 
     this.initializeWebAssembly();
@@ -24,16 +26,38 @@ class InfiniteSequenceInvestigator {
   }
 
   addEventListeners(self) {
-    document.querySelector('#NumberPlusButton').addEventListener('click', () => self.handleChosenNumberClick(self, 'positive'));
-    document.querySelector('#NumberMinusButton').addEventListener('click', () => self.handleChosenNumberClick(self, 'negative'));
+    document.querySelector('#NumberPlusButton')
+      .addEventListener('click', () => self.handleChosenNumberClick(self, this.factorsOfNumbersToInclude, 'positive'));
+    document.querySelector('#NumberMinusButton')
+      .addEventListener('click', () => self.handleChosenNumberClick(self, this.factorsOfNumbersToExclude, 'negative'));
+
+    document.querySelector('#NumberInput').addEventListener('keydown', (event) => {
+      if (event.key === '+') {
+        self.handleChosenNumberClick(self, this.factorsOfNumbersToInclude, 'positive');
+        event.preventDefault();
+      } else if (event.key === '-') {
+        self.handleChosenNumberClick(self, this.factorsOfNumbersToExclude, 'negative');
+        event.preventDefault();
+      }
+    });
   }
 
-  handleChosenNumberClick(self, className) {
+  handleChosenNumberClick(self, array, className) {
     const newNumbers = NumberInputParser.parse(self.numberInput.value);
     newNumbers.forEach((number) => {
       const numberId = self.getNewNumberId(self);
       self.numbers[numberId] = number;
-      const domElement = self.createNumberElement(number, numberId, className, () => delete self.numbers[numberId]);
+      array.push(number);
+      const domElement = self.createNumberElement(number, numberId, className, () => {
+        delete self.numbers[numberId];
+        const index = array.indexOf(number);
+        if (index !== -1) {
+          array.splice(index, 1);
+        } else {
+          console.error(`Could not find ${number} in ${array}!`);
+        }
+        self.render(self);
+      });
       self.chosenNumbers.appendChild(domElement);
     });
     self.numberInput.value = '';
@@ -64,11 +88,22 @@ class InfiniteSequenceInvestigator {
       element.remove();
     });
 
-    for (let i = 1; i <= 100; i++) {
-      const span = document.createElement('span');
-      span.className = 'output-number';
-      span.innerText = i.toString();
-      self.outputContainer.appendChild(span);
+    if (self.factorsOfNumbersToInclude.length > 0) {
+      let outputCount = 0;
+      let i = 0;
+      while (outputCount < 500) {
+        i++;
+        const include = self.factorsOfNumbersToInclude.some((factor) => i % factor == 0);
+        const exclude = self.factorsOfNumbersToExclude.some((factor) => i % factor == 0);
+        if (exclude || !include) {
+          continue;
+        }
+        const span = document.createElement('span');
+        span.className = 'output-number';
+        span.innerText = i.toString();
+        self.outputContainer.appendChild(span);
+        outputCount++;
+      }
     }
   }
 }
