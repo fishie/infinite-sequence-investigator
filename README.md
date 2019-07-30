@@ -33,6 +33,13 @@ npm run build
 npm start
 ```
 
+Under Windows Subsystem for Linux, you might want to set the BROWSER environment
+variable to avoid automatically opening a text-based browser. For example:
+
+```
+export BROWSER="/mnt/c/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+```
+
 ## Test
 
 ```
