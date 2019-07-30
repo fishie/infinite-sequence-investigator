@@ -1,4 +1,4 @@
-import { NumberInputParser } from './NumberInputParser.js';
+import { FactorInputParser } from './FactorInputParser.js';
 
 class InfiniteSequenceInvestigator {
 
@@ -12,8 +12,8 @@ class InfiniteSequenceInvestigator {
 
     document.addEventListener('DOMContentLoaded', () => {
       this.addEventListeners(this);
-      this.numberInput = document.querySelector('#NumberInput');
-      this.chosenNumbers = document.querySelector('#ChosenNumbers');
+      this.factorInput = document.querySelector('#FactorInput');
+      this.chosenFactorsContainer = document.querySelector('#ChosenFactorsContainer');
       this.outputContainer = document.querySelector('#OutputContainer');
     });
   }
@@ -26,29 +26,37 @@ class InfiniteSequenceInvestigator {
   }
 
   addEventListeners(self) {
-    document.querySelector('#NumberPlusButton')
-      .addEventListener('click', () => self.handleChosenNumberClick(self, this.factorsOfNumbersToInclude, 'positive'));
-    document.querySelector('#NumberMinusButton')
-      .addEventListener('click', () => self.handleChosenNumberClick(self, this.factorsOfNumbersToExclude, 'negative'));
+    document.querySelector('#AddFactorToIncludeButton')
+      .addEventListener('click', () => self.handleAddFactorToIncludeClick(self));
+    document.querySelector('#AddFactorToExcludeButton')
+      .addEventListener('click', () => self.handleAddFactorToExcludeClick(self));
 
-    document.querySelector('#NumberInput').addEventListener('keydown', (event) => {
+    document.querySelector('#FactorInput').addEventListener('keydown', (event) => {
       if (event.key === '+') {
-        self.handleChosenNumberClick(self, this.factorsOfNumbersToInclude, 'positive');
+        self.handleAddFactorToIncludeClick(self);
         event.preventDefault();
       } else if (event.key === '-') {
-        self.handleChosenNumberClick(self, this.factorsOfNumbersToExclude, 'negative');
+        self.handleAddFactorToExcludeClick(self);
         event.preventDefault();
       }
     });
   }
 
-  handleChosenNumberClick(self, array, className) {
-    const newNumbers = NumberInputParser.parse(self.numberInput.value);
+  handleAddFactorToIncludeClick(self) {
+    return self.handleAddFactorClick(self, self.factorsOfNumbersToInclude, 'include');
+  }
+
+  handleAddFactorToExcludeClick(self) {
+    return self.handleAddFactorClick(self, self.factorsOfNumbersToExclude, 'exclude');
+  }
+
+  handleAddFactorClick(self, array, className) {
+    const newNumbers = FactorInputParser.parse(self.factorInput.value);
     newNumbers.forEach((number) => {
-      const numberId = self.getNewNumberId(self);
+      const numberId = self.getNewFactorId(self);
       self.numbers[numberId] = number;
       array.push(number);
-      const domElement = self.createNumberElement(number, numberId, className, () => {
+      const domElement = self.createFactorElement(number, numberId, className, () => {
         delete self.numbers[numberId];
         const index = array.indexOf(number);
         if (index !== -1) {
@@ -58,17 +66,17 @@ class InfiniteSequenceInvestigator {
         }
         self.render(self);
       });
-      self.chosenNumbers.appendChild(domElement);
+      self.chosenFactorsContainer.appendChild(domElement);
     });
-    self.numberInput.value = '';
+    self.factorInput.value = '';
     self.render(self);
   }
 
-  getNewNumberId(self) {
+  getNewFactorId(self) {
     return self.numberIdCounter++;
   }
 
-  createNumberElement(number, numberId, className, deleteCallback) {
+  createFactorElement(number, numberId, className, deleteCallback) {
     const span = document.createElement('span');
     span.classList.add('chosen-number', className);
     span.innerText = `${number}`;

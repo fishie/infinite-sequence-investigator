@@ -25,7 +25,7 @@ span {
     display: flex;
 }
 
-button.number-buttons {
+button.factor-buttons {
     font-weight: bold;
     font-family: monospace;
     font-size: 20px;
@@ -41,10 +41,10 @@ span.chosen-number {
     color: white;
     font-weight: bold;
 }
-span.chosen-number.positive {
+span.chosen-number.include {
     background-color: #12bc12;
 }
-span.chosen-number.negative {
+span.chosen-number.exclude {
     background-color: red;
 }
 span.chosen-number button {
