@@ -6,7 +6,7 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "test": "node --experimental-modules app.tests.js",
+    "test": "python3 test.py",
     "start": "npm run eslint && npm test && python3 start.py",
     "build": "emcc app.c -o app.wasm -Os",
     "eslint": "eslint --ext .js ."
