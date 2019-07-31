@@ -101,8 +101,8 @@ class InfiniteSequenceInvestigator {
       let i = 0;
       while (outputCount < 500) {
         i++;
-        const include = self.factorsOfNumbersToInclude.some((factor) => i % factor == 0);
-        const exclude = self.factorsOfNumbersToExclude.some((factor) => i % factor == 0);
+        const include = self.factorsOfNumbersToInclude.some((factor) => i % factor === 0);
+        const exclude = self.factorsOfNumbersToExclude.some((factor) => i % factor === 0);
         if (exclude || !include) {
           continue;
         }

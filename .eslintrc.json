@@ -26,6 +26,7 @@
             "always"
         ],
         "no-console": "off",
-        "no-restricted-globals": ["error", "self"]
+        "no-restricted-globals": ["error", "self"],
+        "eqeqeq": "error"
     }
 }
