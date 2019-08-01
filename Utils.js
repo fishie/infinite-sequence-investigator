@@ -41,3 +41,5 @@ export function test(actual, expected) {
     console.log(`\x1b[31mfail   ${JSON.stringify(actual)} !== ${JSON.stringify(expected)}\x1b[0m`);
   }
 }
+
+export class CodingError extends Error {}
