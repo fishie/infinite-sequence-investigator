@@ -11,7 +11,7 @@ class InfiniteSequenceInvestigator {
     this.initializeWebAssembly();
 
     document.addEventListener('DOMContentLoaded', () => {
-      this.addEventListeners(this);
+      this.addEventListeners();
       this.factorInput = document.querySelector('#FactorInput');
       this.chosenFactorsContainer = document.querySelector('#ChosenFactorsContainer');
       this.outputContainer = document.querySelector('#OutputContainer');
@@ -25,76 +25,79 @@ class InfiniteSequenceInvestigator {
       });
   }
 
-  addEventListeners(self) {
+  addEventListeners() {
     document.querySelector('#AddFactorToIncludeButton')
-      .addEventListener('click', () => self.handleAddFactorToIncludeClick(self));
+      .addEventListener('click', () => this.handleAddFactorToIncludeClick());
     document.querySelector('#AddFactorToExcludeButton')
-      .addEventListener('click', () => self.handleAddFactorToExcludeClick(self));
+      .addEventListener('click', () => this.handleAddFactorToExcludeClick());
 
     document.querySelector('#FactorInput').addEventListener('keydown', (event) => {
       if (event.key === '+') {
-        self.handleAddFactorToIncludeClick(self);
+        this.handleAddFactorToIncludeClick();
         event.preventDefault();
       } else if (event.key === '-') {
-        self.handleAddFactorToExcludeClick(self);
+        this.handleAddFactorToExcludeClick();
         event.preventDefault();
       }
     });
   }
 
-  removeFactor(self, factor) {
-    if (self.factorDomElements[factor].classList.contains('include')) {
-      const index = self.factorsOfNumbersToInclude.indexOf(factor);
+  removeFactor(factor) {
+    if (this.factorDomElements[factor].classList.contains('include')) {
+      const index = this.factorsOfNumbersToInclude.indexOf(factor);
       if (index !== -1) {
-        self.factorsOfNumbersToInclude.splice(index, 1);
+        this.factorsOfNumbersToInclude.splice(index, 1);
       } else {
-        throw new CodingError(`Could not find ${factor} in ${self.factorsOfNumbersToInclude}!`);
+        throw new CodingError(`Could not find ${factor} in ${this.factorsOfNumbersToInclude}!`);
       }
     } else {
-      const index = self.factorsOfNumbersToExclude.indexOf(factor);
+      const index = this.factorsOfNumbersToExclude.indexOf(factor);
       if (index !== -1) {
-        self.factorsOfNumbersToExclude.splice(index, 1);
+        this.factorsOfNumbersToExclude.splice(index, 1);
       } else {
-        throw new CodingError(`Could not find ${factor} in ${self.factorsOfNumbersToExclude}!`);
+        throw new CodingError(`Could not find ${factor} in ${this.factorsOfNumbersToExclude}!`);
       }
     }
-    self.factorDomElements[factor].remove();
-    delete self.factorDomElements[factor];
+    this.factorDomElements[factor].remove();
+    delete this.factorDomElements[factor];
   }
 
+  handleAddFactorToIncludeClick() {
+    return this.handleAddFactorClick(this.factorsOfNumbersToInclude, 'include', (number) =>
       number === 0 || this.factorsOfNumbersToExclude.some((factor) => number % factor === 0)
     );
   }
 
-  handleAddFactorToExcludeClick(self) {
-    return self.handleAddFactorClick(self, self.factorsOfNumbersToExclude, 'exclude',
+  handleAddFactorToExcludeClick() {
+    return this.handleAddFactorClick(this.factorsOfNumbersToExclude, 'exclude',
       (factorOfNumberToExclude) => {
-        self.factorsOfNumbersToInclude
+        this.factorsOfNumbersToInclude
           .filter((factorOfNumberToInclude) => factorOfNumberToInclude % factorOfNumberToExclude === 0)
+          .map((factorOfNumberToInclude) => this.removeFactor(factorOfNumberToInclude));
         return factorOfNumberToExclude === 0;
       }
     );
   }
 
-  handleAddFactorClick(self, array, className, filter) {
-    const newNumbers = FactorInputParser.parse(self.factorInput.value);
+  handleAddFactorClick(array, className, filter) {
+    const newNumbers = FactorInputParser.parse(this.factorInput.value);
     for (let number of newNumbers) {
       if (filter(number)) {
         continue;
       }
       array.push(number);
-      const domElement = self.createFactorElement(number, className, () => {
-        self.removeFactor(self, number);
-        self.render(self);
+      const domElement = this.createFactorElement(number, className, () => {
+        this.removeFactor(number);
+        this.render();
       });
-      if (number in self.factorDomElements) {
+      if (number in this.factorDomElements) {
         throw new CodingError('this should never happen');
       }
-      self.factorDomElements[number] = domElement;
-      self.chosenFactorsContainer.appendChild(domElement);
+      this.factorDomElements[number] = domElement;
+      this.chosenFactorsContainer.appendChild(domElement);
     }
-    self.factorInput.value = '';
-    self.render(self);
+    this.factorInput.value = '';
+    this.render();
   }
 
   createFactorElement(number, className, deleteCallback) {
@@ -108,25 +111,25 @@ class InfiniteSequenceInvestigator {
     return span;
   }
 
-  render(self) {
+  render() {
     document.querySelectorAll('.output-number').forEach((element) => {
       element.remove();
     });
 
-    if (self.factorsOfNumbersToInclude.length > 0) {
+    if (this.factorsOfNumbersToInclude.length > 0) {
       let outputCount = 0;
       let i = 0;
       while (outputCount < 500) {
         i++;
-        const include = self.factorsOfNumbersToInclude.some((factor) => i % factor === 0);
-        const exclude = self.factorsOfNumbersToExclude.some((factor) => i % factor === 0);
+        const include = this.factorsOfNumbersToInclude.some((factor) => i % factor === 0);
+        const exclude = this.factorsOfNumbersToExclude.some((factor) => i % factor === 0);
         if (exclude || !include) {
           continue;
         }
         const span = document.createElement('span');
         span.className = 'output-number';
         span.innerText = i.toString();
-        self.outputContainer.appendChild(span);
+        this.outputContainer.appendChild(span);
         outputCount++;
       }
     }
