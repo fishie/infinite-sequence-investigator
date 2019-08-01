@@ -46,8 +46,7 @@ export BROWSER="/mnt/c/Program Files (x86)/Google/Chrome/Application/chrome.exe"
 npm test
 ```
 
-Running npm test requires nodejs version 12 or higher because of
---experimental-modules which is experimental support for ES6 style modules in nodejs.
+Running npm test requires nodejs >= 12 and Python >= 3.7.
 
 ## Troubleshooting
 

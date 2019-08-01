@@ -52,7 +52,7 @@ class InfiniteSequenceInvestigator {
 
   handleAddFactorClick(self, array, className) {
     const newNumbers = FactorInputParser.parse(self.factorInput.value);
-    newNumbers.forEach((number) => {
+    for (let number of newNumbers) {
       const numberId = self.getNewFactorId(self);
       self.numbers[numberId] = number;
       array.push(number);
@@ -67,7 +67,7 @@ class InfiniteSequenceInvestigator {
         self.render(self);
       });
       self.chosenFactorsContainer.appendChild(domElement);
-    });
+    }
     self.factorInput.value = '';
     self.render(self);
   }
