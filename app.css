@@ -60,7 +60,13 @@ span.chosen-number button {
 #OutputContainer {
     display: flex;
     flex-flow: row wrap;
+    align-items: baseline;
 }
 .output-number {
     width: 40px;
+}
+.prime {
+    font-weight: bold;
+    color: #6817d0;
+    font-size: 1.2em;
 }

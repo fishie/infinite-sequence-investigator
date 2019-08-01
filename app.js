@@ -15,6 +15,7 @@ class InfiniteSequenceInvestigator {
       this.factorInput = document.querySelector('#FactorInput');
       this.chosenFactorsContainer = document.querySelector('#ChosenFactorsContainer');
       this.outputContainer = document.querySelector('#OutputContainer');
+      this.factorInput.focus();
     });
   }
 
@@ -111,6 +112,18 @@ class InfiniteSequenceInvestigator {
     return span;
   }
 
+  isPrime(n) {
+    if (n === 1 || (n > 2 && (n % 2 === 0))) {
+      return false;
+    }
+    for (let i = 3; i*i <= n; i += 2) {
+      if (n % i === 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   render() {
     document.querySelectorAll('.output-number').forEach((element) => {
       element.remove();
@@ -129,6 +142,9 @@ class InfiniteSequenceInvestigator {
         const span = document.createElement('span');
         span.className = 'output-number';
         span.innerText = i.toString();
+        if (this.isPrime(i)) {
+          span.classList.add('prime');
+        }
         this.outputContainer.appendChild(span);
         outputCount++;
       }
