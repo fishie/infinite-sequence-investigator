@@ -27,6 +27,7 @@
         ],
         "no-console": "off",
         "no-restricted-globals": ["error", "self"],
-        "eqeqeq": "error"
+        "eqeqeq": "error",
+        "no-restricted-syntax": ["error", "ForInStatement"]
     }
 }
