@@ -26,11 +26,9 @@ span {
 }
 
 button.factor-buttons {
-    font-weight: bold;
-    font-family: monospace;
-    font-size: 20px;
     height: 30px;
     width: 30px;
+    line-height: 30px;
 }
 
 span.chosen-number {
@@ -41,10 +39,10 @@ span.chosen-number {
     color: white;
     font-weight: bold;
 }
-span.chosen-number.include {
+.include {
     background-color: #12bc12;
 }
-span.chosen-number.exclude {
+.exclude {
     background-color: red;
 }
 span.chosen-number button {
