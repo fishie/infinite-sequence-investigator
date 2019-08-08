@@ -1,15 +1,22 @@
 :root {
-    --border-color: #525252;
+    --border-color: #696969;
+    --focus-outline-color: #1e5aff;
 }
 
 body {
     display: flex;
 }
 
+/* Remove dotted focus outline on buttons for Firefox */
+button::-moz-focus-inner {
+    border: 0;
+}
+
 input, button {
     vertical-align: bottom;
     box-sizing: border-box;
     border: 1px solid var(--border-color);
+    outline: none;
 }
 
 label {
@@ -28,6 +35,23 @@ button {
     padding: 0;
 }
 
+.factor-buttons:focus, input:focus {
+    outline: 2px solid var(--focus-outline-color);
+}
+#AddFactorToExcludeButton:focus {
+    z-index: 1;
+    border: none;
+    height: 28px;
+    margin-top: 1px;
+}
+#AddFactorToIncludeButton:focus {
+    outline-offset: -1px;
+}
+input:focus {
+    outline-offset: -1px;
+    z-index: 1;
+}
+
 span {
     display: flex;
 }
@@ -35,7 +59,7 @@ span {
 button.factor-buttons {
     height: 30px;
     width: 30px;
-    line-height: 30px;
+    line-height: 0;
 }
 
 #AddFactorToExcludeButton {
