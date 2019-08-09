@@ -49,7 +49,7 @@ span {
     height: 28px;
     margin-top: 1px;
 }
-#AddFactorToIncludeButton:focus, .chosen-number button:focus {
+#AddFactorToIncludeButton:focus, .chosen-factor button:focus {
     outline-offset: -1px;
 }
 input:focus {
@@ -69,7 +69,7 @@ button.factor-buttons {
     border-right-width: 0;
 }
 
-span.chosen-number {
+span.chosen-factor {
     border: 1px solid var(--border-color);
     border-radius: 15%;
     margin: 8px 2px;
@@ -83,7 +83,7 @@ span.chosen-number {
 .exclude {
     background-color: red;
 }
-span.chosen-number button {
+span.chosen-factor button {
     background: none;
     border: none;
     color: white;

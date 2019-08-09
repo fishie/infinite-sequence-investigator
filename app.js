@@ -103,7 +103,7 @@ class InfiniteSequenceInvestigator {
 
   createFactorElement(number, className, deleteCallback) {
     const span = document.createElement('span');
-    span.classList.add('chosen-number', className);
+    span.classList.add('chosen-factor', className);
     span.innerText = `${number}`;
     const button = document.createElement('button');
     button.innerText = '✕';
