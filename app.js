@@ -27,12 +27,14 @@ class InfiniteSequenceInvestigator {
   }
 
   addEventListeners() {
-    document.querySelector('#AddFactorToIncludeButton')
+    const $ = document.querySelector.bind(document);
+
+    $('#AddFactorToIncludeButton')
       .addEventListener('click', () => this.handleAddFactorToIncludeClick());
-    document.querySelector('#AddFactorToExcludeButton')
+    $('#AddFactorToExcludeButton')
       .addEventListener('click', () => this.handleAddFactorToExcludeClick());
 
-    document.querySelector('#FactorInput').addEventListener('keydown', (event) => {
+    $('#FactorInput').addEventListener('keydown', (event) => {
       if (event.key === '+') {
         this.handleAddFactorToIncludeClick();
         event.preventDefault();
@@ -41,6 +43,24 @@ class InfiniteSequenceInvestigator {
         event.preventDefault();
       }
     });
+
+    const handleEnterAndSpaceKey = (id, handleCallback) => {
+      $(id).addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          $(id + ' svg').style = 'width: 10px; height: 10px;';
+          event.preventDefault();
+        }
+      });
+      $(id).addEventListener('keyup', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          $(id + ' svg').style = '';
+          handleCallback();
+          event.preventDefault();
+        }
+      });
+    };
+    handleEnterAndSpaceKey('#AddFactorToExcludeButton', () => this.handleAddFactorToExcludeClick());
+    handleEnterAndSpaceKey('#AddFactorToIncludeButton', () => this.handleAddFactorToIncludeClick());
   }
 
   removeFactor(factor) {
