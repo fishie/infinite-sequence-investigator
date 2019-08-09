@@ -40,7 +40,25 @@ span {
 }
 
 
-.factor-buttons:focus, input:focus, button:focus {
+#AddFactorToExcludeButton:hover {
+    background-color: #920000;
+    outline: 1px solid black;
+    z-index: 1;
+    border: none;
+    height: 28px;
+    margin-top: 1px;
+}
+#AddFactorToIncludeButton:hover {
+    background-color: #005a00;
+    outline: 1px solid black;
+    outline-offset: -1px;
+}
+
+
+input:focus,
+button:focus,
+#AddFactorToExcludeButton:focus,
+#AddFactorToIncludeButton:focus {
     outline: 2px solid var(--focus-outline-color);
 }
 #AddFactorToExcludeButton:focus {
