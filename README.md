@@ -62,16 +62,18 @@ sudo su -c "echo 'application/wasm    wasm' >> /etc/mime.types"
 
 ## Thanks to
 
-[Open Iconic](https://github.com/iconic/open-iconic)
+- [Open Iconic](https://github.com/iconic/open-iconic)
 
-[vscode](https://github.com/microsoft/vscode)
+- [vscode](https://github.com/microsoft/vscode)
 
-[Node.js](https://github.com/nodejs)
+- [Node.js](https://github.com/nodejs)
 
-[npm](https://github.com/npm)
+- [npm](https://github.com/npm)
 
-[fish](https://github.com/fish-shell)
+- [fish](https://github.com/fish-shell)
 
-[Python](https://github.com/python)
+- [Python](https://github.com/python)
 
-[ESLint](https://github.com/eslint)
+- [ESLint](https://github.com/eslint)
+
+- [Open Sans by Steve Matteson](https://fonts.google.com/specimen/Open+Sans)

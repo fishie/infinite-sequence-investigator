@@ -125,10 +125,24 @@ span.chosen-factor button {
     align-items: baseline;
 }
 .output-number {
-    width: 40px;
+    width: 52px;
+    font-family: 'Open Sans';
 }
 .prime {
     font-weight: bold;
     color: #6817d0;
-    font-size: 1.2em;
+}
+
+
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: normal;
+    font-display: block;
+    src: local('Open Sans Regular'), local('OpenSans-Regular'), url(OpenSans-Regular-numbers.woff2) format('woff2');
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-display: block;
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url(OpenSans-Bold-numbers.woff2) format('woff2');
 }
