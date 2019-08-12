@@ -26,7 +26,9 @@
             "always"
         ],
         "no-console": "off",
+        "no-constant-condition": "off",
         "eqeqeq": "error",
-        "no-restricted-syntax": ["error", "ForInStatement"]
+        "no-restricted-syntax": ["error", "ForInStatement"],
+        "curly": "error"
     }
 }
