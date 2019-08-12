@@ -1,12 +1,16 @@
 import { FactorInputParser } from './FactorInputParser.js';
 import { CodingError } from './Utils.js';
+import { leastCommonMultiple } from './Mathematics.js';
 
 class InfiniteSequenceInvestigator {
 
   constructor() {
     this.factorsOfNumbersToInclude = [];
     this.factorsOfNumbersToExclude = [];
+    this.leastCommonMultiple = 0;
     this.factorDomElements = {};
+    this.previousSequenceNumber = null;
+    this.sum = 0;
 
     this.initializeWebAssembly();
 
@@ -14,7 +18,8 @@ class InfiniteSequenceInvestigator {
       this.addEventListeners();
       this.factorInput = document.querySelector('#FactorInput');
       this.chosenFactorsContainer = document.querySelector('#ChosenFactorsContainer');
-      this.outputContainer = document.querySelector('#OutputContainer');
+      this.sequenceContainer = document.querySelector('#SequenceContainer');
+      this.patternContainer = document.querySelector('#PatternContainer');
       this.factorInput.focus();
     });
   }
@@ -109,6 +114,7 @@ class InfiniteSequenceInvestigator {
       array.push(number);
       const domElement = this.createFactorElement(number, className, () => {
         this.removeFactor(number);
+        this.updateLeastCommonMultiple();
         this.render();
       });
       if (number in this.factorDomElements) {
@@ -118,6 +124,7 @@ class InfiniteSequenceInvestigator {
       this.chosenFactorsContainer.appendChild(domElement);
     }
     this.factorInput.value = '';
+    this.updateLeastCommonMultiple();
     this.render();
   }
 
@@ -133,7 +140,7 @@ class InfiniteSequenceInvestigator {
   }
 
   isPrime(n) {
-    if (n === 1 || (n > 2 && (n % 2 === 0))) {
+    if (n <= 1 || (n > 2 && (n % 2 === 0))) {
       return false;
     }
     for (let i = 3; i*i <= n; i += 2) {
@@ -144,29 +151,58 @@ class InfiniteSequenceInvestigator {
     return true;
   }
 
+  updateLeastCommonMultiple() {
+    this.leastCommonMultiple = leastCommonMultiple(this.factorsOfNumbersToExclude.concat(this.factorsOfNumbersToInclude));
+  }
+
+  getPatternNumberTitle(n) {
+    return `${this.previousSequenceNumber} + ${n} = ${this.sum}
+${this.leastCommonMultiple+this.previousSequenceNumber} + ${n} = ${this.leastCommonMultiple + this.sum}
+${2*this.leastCommonMultiple+this.previousSequenceNumber} + ${n} = ${2*this.leastCommonMultiple + this.sum}
+...`;
+  }
+
+  addSequenceNumber(n) {
+    const sequenceSpan = document.createElement('span');
+    sequenceSpan.className = 'sequence-number';
+    sequenceSpan.innerText = n.toString();
+    if (this.isPrime(n)) {
+      sequenceSpan.classList.add('prime');
+    }
+    this.sequenceContainer.appendChild(sequenceSpan);
+
+    if (this.previousSequenceNumber !== null && this.sum < this.leastCommonMultiple) {
+      const patternNumber = n - this.previousSequenceNumber;
+      this.sum += patternNumber;
+      const patternSpan = document.createElement('span');
+      patternSpan.className = 'pattern-number';
+      patternSpan.innerText = `${patternNumber}`;
+      patternSpan.title = this.getPatternNumberTitle(patternNumber);
+      this.patternContainer.appendChild(patternSpan);
+    }
+    this.previousSequenceNumber = n;
+    this.sum = this.previousSequenceNumber;
+  }
+
   render() {
-    document.querySelectorAll('.output-number').forEach((element) => {
+    document.querySelectorAll('.sequence-number,.pattern-number').forEach((element) => {
       element.remove();
     });
+    this.previousSequenceNumber = null;
+    this.sum = 0;
 
     if (this.factorsOfNumbersToInclude.length > 0) {
-      let outputCount = 0;
-      let i = 0;
-      while (outputCount < 500) {
+      let count = 0;
+      let i = -1;
+      while (count < 500) {
         i++;
         const include = this.factorsOfNumbersToInclude.some((factor) => i % factor === 0);
         const exclude = this.factorsOfNumbersToExclude.some((factor) => i % factor === 0);
         if (exclude || !include) {
           continue;
         }
-        const span = document.createElement('span');
-        span.className = 'output-number';
-        span.innerText = i.toString();
-        if (this.isPrime(i)) {
-          span.classList.add('prime');
-        }
-        this.outputContainer.appendChild(span);
-        outputCount++;
+        this.addSequenceNumber(i);
+        count++;
       }
     }
   }

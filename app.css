@@ -119,14 +119,19 @@ span.chosen-factor button {
     flex: 1;
 }
 
-#OutputContainer {
+#SequenceContainer, #PatternContainer {
     display: flex;
     flex-flow: row wrap;
     align-items: baseline;
 }
-.output-number {
+.sequence-number {
     width: 52px;
     font-family: 'Open Sans';
+}
+.pattern-number {
+    width: 30px;
+    font-family: 'Open Sans';
+    font-size: 8px;
 }
 .prime {
     font-weight: bold;
