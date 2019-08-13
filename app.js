@@ -185,7 +185,7 @@ ${2*this.leastCommonMultiple+this.previousSequenceNumber} + ${n} = ${2*this.leas
   }
 
   render() {
-    document.querySelectorAll('.sequence-number,.pattern-number').forEach((element) => {
+    document.querySelectorAll('.sequence-number,.pattern-number,h2').forEach((element) => {
       element.remove();
     });
     this.previousSequenceNumber = null;
@@ -203,6 +203,17 @@ ${2*this.leastCommonMultiple+this.previousSequenceNumber} + ${n} = ${2*this.leas
         }
         this.addSequenceNumber(i);
         count++;
+      }
+      if (count > 0) {
+        const outputContainer = document.querySelector('#OutputContainer');
+
+        const sequenceHeader = document.createElement('h2');
+        sequenceHeader.innerText = 'Sequence';
+        outputContainer.insertBefore(sequenceHeader, this.sequenceContainer);
+
+        const patternHeader = document.createElement('h2');
+        patternHeader.innerText = 'Pattern';
+        outputContainer.insertBefore(patternHeader, this.patternContainer);
       }
     }
   }
