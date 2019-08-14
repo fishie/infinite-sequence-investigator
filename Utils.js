@@ -34,12 +34,22 @@ export function assertType(value, type) {
   }
 }
 
-export function test(actual, expected) {
+function test(inputs, actual, expected) {
+  const inputAsString = inputs.map((input) => JSON.stringify(input)).join();
   if (JSON.stringify(actual) === JSON.stringify(expected)) {
-    console.log(`\x1b[32mok     ${JSON.stringify(actual)} === ${JSON.stringify(expected)}\x1b[0m`);
+    console.log(`\x1b[32mok     ${JSON.stringify(actual)} === ${JSON.stringify(expected)} \x1b[36m${inputAsString}\x1b[0m`);
   } else {
-    console.log(`\x1b[31mfail   ${JSON.stringify(actual)} !== ${JSON.stringify(expected)}\x1b[0m`);
+    console.log(`\x1b[31mfail   ${JSON.stringify(actual)} !== ${JSON.stringify(expected)} \x1b[36m${inputAsString}\x1b[0m`);
   }
+}
+
+export function testFunction(name, functionToTest, callback) {
+  assertType(name, 'string');
+  console.log(`::: ${name} :::`);
+  callback((inputs, expected) => {
+    assertType(inputs, 'array');
+    test(inputs, functionToTest(...inputs), expected);
+  });
 }
 
 export class CodingError extends Error {}
