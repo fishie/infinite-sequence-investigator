@@ -1,13 +1,13 @@
 import { FactorInputParser } from './FactorInputParser.js';
 import { CodingError } from './Utils.js';
-import { leastCommonMultiple } from './Mathematics.js';
+import { leastCommonMultipleNoMultiples } from './Mathematics.js';
 
 class InfiniteSequenceInvestigator {
 
   constructor() {
     this.factorsOfNumbersToInclude = [];
     this.factorsOfNumbersToExclude = [];
-    this.leastCommonMultiple = 0;
+    this.leastCommonMultipleNoMultiples = 0;
     this.factorDomElements = {};
     this.previousSequenceNumber = null;
     this.sum = 0;
@@ -114,7 +114,7 @@ class InfiniteSequenceInvestigator {
       array.push(number);
       const domElement = this.createFactorElement(number, className, () => {
         this.removeFactor(number);
-        this.updateLeastCommonMultiple();
+        this.updateLeastCommonMultipleNoMultiples();
         this.render();
       });
       if (number in this.factorDomElements) {
@@ -124,7 +124,7 @@ class InfiniteSequenceInvestigator {
       this.chosenFactorsContainer.appendChild(domElement);
     }
     this.factorInput.value = '';
-    this.updateLeastCommonMultiple();
+    this.updateLeastCommonMultipleNoMultiples();
     this.render();
   }
 
@@ -151,14 +151,15 @@ class InfiniteSequenceInvestigator {
     return true;
   }
 
-  updateLeastCommonMultiple() {
-    this.leastCommonMultiple = leastCommonMultiple(this.factorsOfNumbersToExclude.concat(this.factorsOfNumbersToInclude));
+  updateLeastCommonMultipleNoMultiples() {
+    this.leastCommonMultipleNoMultiples = leastCommonMultipleNoMultiples(
+      this.factorsOfNumbersToInclude, this.factorsOfNumbersToExclude);
   }
 
   getPatternNumberTitle(n) {
     return `${this.previousSequenceNumber} + ${n} = ${this.sum}
-${this.leastCommonMultiple+this.previousSequenceNumber} + ${n} = ${this.leastCommonMultiple + this.sum}
-${2*this.leastCommonMultiple+this.previousSequenceNumber} + ${n} = ${2*this.leastCommonMultiple + this.sum}
+${this.leastCommonMultipleNoMultiples+this.previousSequenceNumber} + ${n} = ${this.leastCommonMultipleNoMultiples + this.sum}
+${2*this.leastCommonMultipleNoMultiples+this.previousSequenceNumber} + ${n} = ${2*this.leastCommonMultipleNoMultiples + this.sum}
 ...`;
   }
 
@@ -171,7 +172,7 @@ ${2*this.leastCommonMultiple+this.previousSequenceNumber} + ${n} = ${2*this.leas
     }
     this.sequenceContainer.appendChild(sequenceSpan);
 
-    if (this.previousSequenceNumber !== null && this.sum < this.leastCommonMultiple) {
+    if (this.previousSequenceNumber !== null && this.sum < this.leastCommonMultipleNoMultiples) {
       const patternNumber = n - this.previousSequenceNumber;
       this.sum += patternNumber;
       const patternSpan = document.createElement('span');
