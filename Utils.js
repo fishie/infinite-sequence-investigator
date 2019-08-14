@@ -34,13 +34,18 @@ export function assertType(value, type) {
   }
 }
 
+let totalTestCounter = 0;
+let successfulTestCounter = 0;
+
 function test(inputs, actual, expected) {
   const inputAsString = inputs.map((input) => JSON.stringify(input)).join();
   if (JSON.stringify(actual) === JSON.stringify(expected)) {
+    successfulTestCounter++;
     console.log(`\x1b[32mok     ${JSON.stringify(actual)} === ${JSON.stringify(expected)} \x1b[36m${inputAsString}\x1b[0m`);
   } else {
     console.log(`\x1b[31mfail   ${JSON.stringify(actual)} !== ${JSON.stringify(expected)} \x1b[36m${inputAsString}\x1b[0m`);
   }
+  totalTestCounter++;
 }
 
 export function testFunction(name, functionToTest, callback) {
@@ -50,6 +55,7 @@ export function testFunction(name, functionToTest, callback) {
     assertType(inputs, 'array');
     test(inputs, functionToTest(...inputs), expected);
   });
+  console.log(`${successfulTestCounter} / ${totalTestCounter}`);
 }
 
 export class CodingError extends Error {}
