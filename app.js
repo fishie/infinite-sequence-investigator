@@ -11,6 +11,7 @@ class InfiniteSequenceInvestigator {
     this.factorDomElements = {};
     this.previousSequenceNumber = null;
     this.sum = 0;
+    this.start = 0;
 
     this.initializeWebAssembly();
 
@@ -66,6 +67,16 @@ class InfiniteSequenceInvestigator {
     };
     handleEnterAndSpaceKey('#AddFactorToExcludeButton', () => this.handleAddFactorToExcludeClick());
     handleEnterAndSpaceKey('#AddFactorToIncludeButton', () => this.handleAddFactorToIncludeClick());
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') {
+        this.start += 500;
+        this.render();
+      } else if (event.key === 'ArrowLeft') {
+        this.start -= 500;
+        this.render();
+      }
+    });
   }
 
   removeFactor(factor) {
@@ -194,7 +205,7 @@ ${2*this.leastCommonMultipleNoMultiples+this.previousSequenceNumber} + ${n} = ${
 
     if (this.factorsOfNumbersToInclude.length > 0) {
       let count = 0;
-      let i = -1;
+      let i = this.start-1;
       while (count < 500) {
         i++;
         const include = this.factorsOfNumbersToInclude.some((factor) => i % factor === 0);
